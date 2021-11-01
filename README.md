@@ -1,6 +1,19 @@
 # GithubPull
 
-<b>This App shows PR of Github Open Projects</b>
+<b>This App shows PR of Github Open Projects in RecyclerView</b>
+
+
+<b>-> Developed using :-</b>
+
+
+<li>Kotlin Programming Language</li>
+
+<li>MVVM Design Pattern </li>
+
+<li>Data Binding</li>
+
+<li>Pagination for Fetching data</li>
+
 
 App Screenshots
 
