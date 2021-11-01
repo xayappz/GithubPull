@@ -1,6 +1,6 @@
 # GithubPull
 
-<b>This App shows PR of Github Open Projects in RecyclerView</b>
+<b>This App shows PR of Github Open Projects </b>
 
 
 <b>-> Developed using :-</b>
