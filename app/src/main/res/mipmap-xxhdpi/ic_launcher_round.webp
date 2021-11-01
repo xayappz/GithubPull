@@ -1,0 +1,146 @@
+package com.fashiongallery.info;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.fashiongallery.info.admin.DashboardActivity;
+import com.fevziomurtekin.customprogress.Dialog;
+import com.fevziomurtekin.customprogress.Type;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.FirebaseTooManyRequestsException;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
+
+import java.util.concurrent.TimeUnit;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class LoginActivity extends AppCompatActivity {
+
+    private static final String TAG = "LOGIN";
+
+    @BindView(R.id.ivClose)
+    ImageView ivClose;
+    @BindView(R.id.etMobile)
+    EditText etMobile;
+    @BindView(R.id.etPassword)
+    EditText etPassword;
+    @BindView(R.id.fabLogin)
+    FloatingActionButton fabLogin;
+    @BindView(R.id.tvRegister)
+    TextView tvRegister;
+
+    private ProgressDialog mProgressDialog;
+    private Dialog pDialog;
+    private FirebaseAuth mAuth;
+    private PhoneAuthProvider.ForceResendingToken mResendToken;
+    private String mVerificationId;
+
+    private boolean isVerify;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Please wait...");
+        mProgressDialog.setCancelable(false);
+        pDialog = findViewById(R.id.progress);
+        pDialog.settype(Type.SPINNER);
+        pDialog.setdurationTime(100);
+    }
+
+    private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
+        @Override
+        public void onVerificationCompleted(PhoneAuthCredential credential) {
+            // This callback will be invoked in two situations:
+            // 1 - Instant verification. In some cases the phone number can be instantly
+            //     verified without needing to send or enter a verification code.
+            // 2 - Auto-retrieval. On some devices Google Play services can automatically
+            //     detect the incoming verification SMS and perform verification without
+            //     user action.
+            Log.d(TAG, "onVerificationCompleted:" + credential);
+            signInWithPhoneAuthCredential(credential);
+        }
+
+        @Override
+        public void onVerificationFailed(FirebaseException e) {
+            // This callback is invoked in an invalid request for verification is made,
+            // for instance if the the phone number format is not valid.
+            Log.w(TAG, "onVerificationFailed", e);
+
+            if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                // Invalid request
+                // ...
+            } else if (e instanceof FirebaseTooManyRequestsException) {
+                // The SMS quota for the project has been exceeded
+                // ...
+            }
+
+            // Show a message and update the UI
+            // ...
+        }
+
+        @Override
+        public void onCodeSent(@NonNull String verificationId,
+                               @NonNull PhoneAuthProvider.ForceResendingToken token) {
+            // The SMS verification code has been sent to the provided phone number, we
+            // now need to ask the user to enter the code and then construct a credential
+            // by combining the code with a verification ID.
+            Log.d(TAG, "onCodeSent:" + verificationId);
+
+            // Save verification ID and resending token so we can use them later
+            mVerificationId = verificationId;
+            mResendToken = token;
+            etPassword.setVisibility(View.VISIBLE);
+            pDialog.gone();
+            if (mProgressDialog.isShowing())
+                mProgressDialog.dismiss();
+            // ...
+        }
+    };
+
+    @OnClick({R.id.ivClose, R.id.fabLogin, R.id.tvRegister})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ivClose:
+                onBackPressed();
+                break;
+            case R.id.fabLogin:
+
+                if (!isVerify) {
+                    if (etMobile.getText().toString().length() > 0) {
+                        if (etMobile.getText().toString().length() == 10) {
+                            isVerify = true;
+                         //   mProgressDialog.show();
+                            pDialog.show();
+                            PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                                    "+91" + etMobile.getText().toString().trim(),        // Phone number to verify
+                                    60,                 // Timeout duration
+                                    TimeUnit.SECONDS,   // Unit of timeout
+                                    LoginActivity.this,               // Activity (for callback binding)
+                               

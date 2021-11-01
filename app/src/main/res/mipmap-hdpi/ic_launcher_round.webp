@@ -1,0 +1,75 @@
+// Generated code from Butter Knife. Do not modify!
+package com.fashiongallery.info;
+
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import androidx.annotation.CallSuper;
+import androidx.annotation.UiThread;
+import butterknife.Unbinder;
+import butterknife.internal.DebouncingOnClickListener;
+import butterknife.internal.Utils;
+import de.hdodenhof.circleimageview.CircleImageView;
+import java.lang.IllegalStateException;
+import java.lang.Override;
+
+public class Profile_ViewBinding implements Unbinder {
+  private Profile target;
+
+  private View view7f0a0125;
+
+  private View view7f0a029b;
+
+  private View view7f0a014f;
+
+  private View view7f0a0150;
+
+  private View view7f0a0144;
+
+  private View view7f0a02a2;
+
+  private View view7f0a0155;
+
+  @UiThread
+  public Profile_ViewBinding(Profile target) {
+    this(target, target.getWindow().getDecorView());
+  }
+
+  @UiThread
+  public Profile_ViewBinding(final Profile target, View source) {
+    this.target = target;
+
+    View view;
+    target.civProfile = Utils.findRequiredViewAsType(source, R.id.civ_profile, "field 'civProfile'", CircleImageView.class);
+    target.tvName = Utils.findRequiredViewAsType(source, R.id.tv_name, "field 'tvName'", TextView.class);
+    target.tvMobile = Utils.findRequiredViewAsType(source, R.id.tv_mobile, "field 'tvMobile'", TextView.class);
+    target.tvEmail = Utils.findRequiredViewAsType(source, R.id.tv_email, "field 'tvEmail'", TextView.class);
+    target.llHeader = Utils.findRequiredViewAsType(source, R.id.ll_header, "field 'llHeader'", LinearLayout.class);
+    view = Utils.findRequiredView(source, R.id.iv_back, "field 'ivBack' and method 'onViewClicked'");
+    target.ivBack = Utils.castView(view, R.id.iv_back, "field 'ivBack'", ImageView.class);
+    view7f0a0125 = view;
+    view.setOnClickListener(new DebouncingOnClickListener() {
+      @Override
+      public void doClick(View p0) {
+        target.onViewClicked(p0);
+      }
+    });
+    view = Utils.findRequiredView(source, R.id.tv_edit, "field 'tvEdit' and method 'onViewClicked'");
+    target.tvEdit = Utils.castView(view, R.id.tv_edit, "field 'tvEdit'", TextView.class);
+    view7f0a029b = view;
+    view.setOnClickListener(new DebouncingOnClickListener() {
+      @Override
+      public void doClick(View p0) {
+        target.onViewClicked(p0);
+      }
+    });
+    target.tvMyOrder = Utils.findRequiredViewAsType(source, R.id.tv_my_order, "field 'tvMyOrder'", TextView.class);
+    view = Utils.findRequiredView(source, R.id.ll_my_order, "field 'llMyOrder' and method 'onViewClicked'");
+    target.llMyOrder = Utils.castView(view, R.id.ll_my_order, "field 'llMyOrder'", LinearLayout.class);
+    view7f0a014f = view;
+    view.setOnClickListener(new DebouncingOnClickListener() {
+      @Override
+      public void doClick(View p0) {
+        target.onViewClicked(p0);
+     

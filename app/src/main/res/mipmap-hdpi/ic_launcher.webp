@@ -1,0 +1,43 @@
+// Generated code from Butter Knife. Do not modify!
+package com.fashiongallery.info;
+
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import androidx.annotation.CallSuper;
+import androidx.annotation.UiThread;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.Unbinder;
+import butterknife.internal.DebouncingOnClickListener;
+import butterknife.internal.Utils;
+import com.fevziomurtekin.customprogress.Dialog;
+import java.lang.IllegalStateException;
+import java.lang.Override;
+
+public class Products_ViewBinding implements Unbinder {
+  private Products target;
+
+  private View view7f0a0125;
+
+  private View view7f0a0128;
+
+  @UiThread
+  public Products_ViewBinding(Products target) {
+    this(target, target.getWindow().getDecorView());
+  }
+
+  @UiThread
+  public Products_ViewBinding(final Products target, View source) {
+    this.target = target;
+
+    View view;
+    view = Utils.findRequiredView(source, R.id.iv_back, "field 'ivBack' and method 'onViewClicked'");
+    target.ivBack = Utils.castView(view, R.id.iv_back, "field 'ivBack'", ImageView.class);
+    view7f0a0125 = view;
+    view.setOnClickListener(new DebouncingOnClickListener() {
+      @Override
+      public void doClick(View p0) {
+        target.onViewClicked(p0);
+      }
+    });
+    target.tvTitle = Utils.findRequiredViewAsType(source, R.id.tv_title, "field 'tvTitle'", TextVi

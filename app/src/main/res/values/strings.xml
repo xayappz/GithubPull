@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">GithubPull</string>
+    <string name="owner_name">Github Owner name</string>
+    <string name="search">Search</string>
+    <string name="view_user_s_repo">Github Repo name</string>
+    <string name="button">Fetch</string>
+    <string name="mainheading">Fill Details to fetch PR</string>
+    <string name="nothing_found">Nothing found 👀 Go back and try again.</string>
+    <string name="no_net">No Internet Connection</string>
+
+
+</resources>

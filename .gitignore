@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">78562292898-bjicn1irpem6tooldj44oa6affkb5o3r.apps.googleusercontent.com</string>
+    <string name="firebase_data
+# Project exclude paths
+/.gradle/
