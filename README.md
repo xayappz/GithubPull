@@ -23,3 +23,6 @@ App Screenshots
 ![Screenshot_1635745004](https://user-images.githubusercontent.com/77268176/139626652-c35b8681-67f3-429c-bcfc-f06bad2e0426.png)
 
 
+*Note : 
+
+Repository is not created as no offline queries needed (caching). 
