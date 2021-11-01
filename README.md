@@ -24,5 +24,5 @@ App Screenshots
 
 
 *Note : 
-
+Helper class is Model for PR as only names is to be fetched.
 Repository is not created as no offline queries needed (caching). 
