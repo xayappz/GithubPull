@@ -15,7 +15,7 @@
 <li>Pagination for Fetching data</li>
 
 
-App Screenshots
+<b>App Screenshots</B>
 
 
 ![Screenshot_1635744987](https://user-images.githubusercontent.com/77268176/139626644-3532ab03-d3ae-443b-8f9d-af4888f542b6.png)
