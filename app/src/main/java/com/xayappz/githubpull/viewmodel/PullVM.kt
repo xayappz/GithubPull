@@ -1,6 +1,5 @@
 package com.xayappz.githubpull.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.xayappz.githubpull.helper.RepoPull

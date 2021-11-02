@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,10 +34,40 @@ class SearchResultActivity : AppCompatActivity() {
     private var repoName: String = ""
     private var isEnd = false
 
-
+    private lateinit var myViewModel:PullVM
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initialize()
+
+         myViewModel = ViewModelProviders.of(this).get(PullVM::class.java)
+
+        myViewModel.endofList.observe(this, {
+            if (it == true) {
+                isEnd = true
+                progressBar.visibility = View.GONE
+                Toast.makeText(this@SearchResultActivity, "All PR Fetched", Toast.LENGTH_SHORT)
+                    .show()
+
+            }
+
+        })
+
+        myViewModel.status.observe(this, {
+            if (it == false) {
+                showError(getString(R.string.no_net))
+
+            }
+        })
+
+        myViewModel.getPullDataFromVM().observe(this, {
+
+            if (it != null) {
+                listRepos(it)
+            } else {
+
+                showError(getString(R.string.nothing_found))
+            }
+        })
 
         getDataPull(userName, repoName)
 
@@ -100,39 +131,7 @@ class SearchResultActivity : AppCompatActivity() {
     }
 
     private fun getDataPull(username: String?, reponame: String?) {
-        val myViewModel = ViewModelProviders.of(this).get(PullVM::class.java)
-
-        myViewModel.endofList.observe(this, {
-            if (it == true) {
-                isEnd = true
-                progressBar.visibility = View.GONE
-                Toast.makeText(this@SearchResultActivity, "All PR Fetched", Toast.LENGTH_SHORT)
-                    .show()
-
-            }
-
-        })
-
-        myViewModel.status.observe(this, {
-            if (it == false) {
-                showError(getString(R.string.no_net))
-
-            }
-        })
-
-        myViewModel.getPullDataFromVM().observe(this, {
-
-            if (it != null) {
-                listRepos(it)
-            } else {
-
-                showError(getString(R.string.nothing_found))
-            }
-        })
-
-
-
-        myViewModel.getPullList(username.toString(), reponame.toString(), pageNumber)
+             myViewModel.getPullList(username.toString(), reponame.toString(), pageNumber)
 
     }
 
