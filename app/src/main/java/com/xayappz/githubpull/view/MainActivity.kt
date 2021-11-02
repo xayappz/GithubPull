@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener {
 
-
             if (gitOwnerName.text.isEmpty() || gitRepoName.text.isEmpty()) {
                 Toast.makeText(
                     this,

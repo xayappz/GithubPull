@@ -2,11 +2,9 @@ package com.xayappz.githubpull.view
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,12 +32,12 @@ class SearchResultActivity : AppCompatActivity() {
     private var repoName: String = ""
     private var isEnd = false
 
-    private lateinit var myViewModel:PullVM
+    private lateinit var myViewModel: PullVM
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initialize()
 
-         myViewModel = ViewModelProviders.of(this).get(PullVM::class.java)
+        myViewModel = ViewModelProviders.of(this).get(PullVM::class.java)
 
         myViewModel.endofList.observe(this, {
             if (it == true) {
@@ -110,6 +108,14 @@ class SearchResultActivity : AppCompatActivity() {
                 totalItemsCount = mLayoutManger.itemCount
                 firstVisibleItemsCount = mLayoutManger.findFirstVisibleItemPosition()
 
+                myViewModel.status.observe(this@SearchResultActivity, {
+                    if (it == false) {
+                        showError(getString(R.string.no_net))
+                        return@observe
+
+                    }
+                })
+
                 if (loading) {
                     if (totalItemsCount > previousTotal) {
                         previousTotal = totalItemsCount
@@ -118,6 +124,7 @@ class SearchResultActivity : AppCompatActivity() {
                         progressBar.visibility = View.GONE
                     }
                 }
+
                 if (!loading && (firstVisibleItemsCount + visibleItemsCount) >= totalItemsCount) {
                     getDataPull(userName, repoName)
                     loading = true
@@ -131,19 +138,42 @@ class SearchResultActivity : AppCompatActivity() {
     }
 
     private fun getDataPull(username: String?, reponame: String?) {
-             myViewModel.getPullList(username.toString(), reponame.toString(), pageNumber)
+        myViewModel.getPullList(username.toString(), reponame.toString(), pageNumber)
 
     }
 
     private fun showError(s: String) {
+        var snackActonText = ""
+
+        snackActonText = if (s == getString(R.string.no_net)) {
+            "Retry"
+        } else {
+            "Search Again"
+        }
         progressBar.visibility = View.GONE
         val theView =
             this@SearchResultActivity.findViewById<View>(android.R.id.content)
-        Snackbar.make(
-            theView,
-            s,
-            Snackbar.LENGTH_LONG
-        ).show()
+
+        val snackbar = Snackbar
+            .make(theView, s, Snackbar.LENGTH_LONG)
+            .setAction(snackActonText) {
+
+                when (s) {
+                    getString(R.string.no_net) -> {
+                        retryAgain()
+                    }
+                    getString(R.string.nothing_found) -> {
+                        onBackPressed()
+                    }
+                }
+            }
+
+        snackbar.show()
+    }
+
+    private fun retryAgain() {
+        myViewModel.getPullList(userName, repoName, pageNumber)
+
     }
 
 

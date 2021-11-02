@@ -27,7 +27,7 @@ class CustomAdapter(var context: Context, val userList: List<RepoPull>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(userList[position])
+        holder.bind( userList[position])
     }
 
     override fun getItemCount(): Int {
@@ -37,8 +37,6 @@ class CustomAdapter(var context: Context, val userList: List<RepoPull>) :
     class ViewHolder(val binding: RepoListLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Any) {
             binding.setVariable(BR.repo, data)
-            binding.executePendingBindings()
-
         }
     }
 
